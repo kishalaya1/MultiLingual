@@ -157,4 +157,7 @@
   <data name="Variable" xml:space="preserve">
     <value>environment variable to </value>
   </data>
+  <data name="AppRestart" xml:space="preserve">
+    <value>and restarting the app.</value>
+  </data>
 </root>
