@@ -1,8 +1,7 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using MultiLingual.Models;
 using Microsoft.Extensions.Localization;
-using Microsoft.AspNetCore.Mvc.Localization;
+using MultiLingual.Models;
+using System.Diagnostics;
 
 namespace MultiLingual.Controllers
 {
