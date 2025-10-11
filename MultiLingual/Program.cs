@@ -23,14 +23,14 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 });
 var app = builder.Build();
 // Uncommenting this line will use the default request localization settings
-// app.UseRequestLocalization();
+app.UseRequestLocalization();
 // forcing the application to load french.Configure the request localization middleware to use French as the default culture
-app.UseRequestLocalization(new RequestLocalizationOptions
-{
-    DefaultRequestCulture = new RequestCulture("fr-FR"),
-    SupportedCultures = new[] { new System.Globalization.CultureInfo("fr-FR") },
-    SupportedUICultures = new[] { new System.Globalization.CultureInfo("fr-FR") }
-});
+//app.UseRequestLocalization(new RequestLocalizationOptions
+//{
+//    DefaultRequestCulture = new RequestCulture("fr-FR"),
+//    SupportedCultures = new[] { new System.Globalization.CultureInfo("fr-FR") },
+//    SupportedUICultures = new[] { new System.Globalization.CultureInfo("fr-FR") }
+//});
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
