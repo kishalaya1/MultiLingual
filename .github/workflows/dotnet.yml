@@ -1,6 +1,4 @@
-# This workflow will build a .NET project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
-
+# This workflow will build a .NET project located in the MultiLingual subfolder
 name: .NET
 
 on:
@@ -11,18 +9,35 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore dependencies
+        working-directory: MultiLingual
+        run: dotnet restore
+
+      - name: Build
+        working-directory: MultiLingual
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Run tests if present
+        shell: bash
+        run: |
+          set -e
+          # find test projects under the MultiLingual folder
+          TEST_PROJECTS=$(find MultiLingual -maxdepth 4 -type f \( -name "*Test*.csproj" -o -name "*Tests*.csproj" \) -print)
+          if [ -z "$TEST_PROJECTS" ]; then
+            echo "No test projects found, skipping tests."
+            exit 0
+          fi
+          for proj in $TEST_PROJECTS; do
+            echo "Running tests in $proj"
+            dotnet test "$proj" --no-build --verbosity normal
+          done
